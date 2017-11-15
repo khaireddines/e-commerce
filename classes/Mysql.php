@@ -3,7 +3,7 @@ class Mysql
 {
 	private $_serveur = "127.0.0.1";
 	private $_login = "root";
-	private $_mdp	= "root";
+	private $_mdp	= "";
 	private $_bdd	= "affable_bean_g1";
 	private $_cnx;
 
@@ -11,7 +11,7 @@ class Mysql
 	{
 		return $this->_cnx;
 	}
-	
+
 	public function __construct()
 	{
 
@@ -20,7 +20,7 @@ class Mysql
 		    die('Erreur de connexion ' . mysqli_connect_error());
 		}
 	}
-	
+
 	public function requete($q)
 	{
 		$res = mysqli_query($this->_cnx, $q);
