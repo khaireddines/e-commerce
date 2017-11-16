@@ -1,12 +1,12 @@
-<?php 
-require_once('verifier_access.php'); 
+<?php
+require_once('verifier_access.php');
 require_once("../classes/Categorie.php");
 @$id = $_GET['id'];
 
 if( !empty($id) ) {
 	require_once("../classes/Produit.php");
-	$cat= new Produit();
-	$cat = $cat->details($id);
+	$pro= new Produit();
+	$pro = $pro->details($id);
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,7 +23,7 @@ if( !empty($id) ) {
   <link rel="stylesheet" type="text/css" href="bootstrap-wysihtml5/lib/css/bootstrap.min.css"></link>
   <link rel="stylesheet" type="text/css" href="bootstrap-wysihtml5/lib/css/prettify.css"></link>
   <link rel="stylesheet" type="text/css" href="bootstrap-wysihtml5/src/bootstrap-wysihtml5.css"></link>
-  <style>input, textarea, select, .uneditable-input{height:auto;}#loadimg{display:none;}</style>      
+  <style>input, textarea, select, .uneditable-input{height:auto;}#loadimg{display:none;}</style>
 </head>
 <body>
 
@@ -42,22 +42,27 @@ if( !empty($id) ) {
     <table class="tab_diapo" border="0">
       <tr>
         <th>
-          Libellé :<span style="color:red;">*</span>            
+          Libellé :<span style="color:red;">*</span>
         </th>
         <td>
-          <input required type="text" name="libelle" id="libelle" validate="required" value="<?php echo @($cat->_libelle); ?>" />
+          <input required type="text" name="libelle" id="libelle" validate="required" value="<?php echo @($pro->_libelle); ?>" />
         </td>
       </tr>
       <tr>
       <th>Categorie :<span style="color:red;">*</span></th>
        <td><select name="id_categorie" class="form-control">
        <?php
-       $cat = new Categorie();	
+       $cat = new Categorie();
+
           $liste = $cat->liste();
           foreach($liste as $data )
-          {?>
+          {if (isset($id)&&($data->_id==$pro->_id)) {?>
+          	# code...
+						<option selected value="<?php echo $data->_id ?>"><?php  echo $data->_libelle ?>
+        <?php }
+						?>
 
-       <option value="<?php echo $data->_id ?>"><?php  echo $data->_libelle ?> 
+       <option value="<?php echo $data->_id ?>"><?php  echo $data->_libelle ?>
        </option>
        <?php }?>
        </select></td>
@@ -66,20 +71,22 @@ if( !empty($id) ) {
       <?php if( !empty($id) ) { ?>
       <tr>
         <th>
-          Image actuelle :           
+          Image actuelle :
         </th>
-        <td>  
-          <img src="../upload/<?php echo $cat->_image; ?>" width="150" /> 
+        <td>
+          <img src="../upload/<?php echo $pro->_image; ?>" width="150" />
         </td>
       </tr>
       <?php } ?>
 
 <tr>
+	<?php if( !empty($id) ) { ?>
           <th>Prix :<span style="color:red;">*</span> </th>
           <td>
-            <input type="text" name="prix" class="text"  >
-             
+            <input type="text" name="prix" class="text" value=<?php echo @($pro->_prix); ?> >
+
            </input>
+				<?php }?>
          </td>
        </tr>
       <tr>
@@ -91,14 +98,16 @@ if( !empty($id) ) {
         <tr>
           <th>Description :<span style="color:red;">*</span> </th>
           <td>
+						<?php if( !empty($id) ) { ?>
             <textarea required name="description" class="textarea" style="width: 810px; height: 200px" >
-             <?php echo @$cat->_description; ?>
+             <?php echo @$pro->_description; ?>
            </textarea>
+				 <?php } ?>
          </td>
        </tr>
-       
 
-       
+
+
 
 
      </table>
