@@ -80,13 +80,13 @@ if( !empty($id) ) {
       <?php } ?>
 
 <tr>
-	<?php if( !empty($id) ) { ?>
+
           <th>Prix :<span style="color:red;">*</span> </th>
           <td>
-            <input type="text" name="prix" class="text" value=<?php echo @($pro->_prix); ?> >
+            <input type="text" name="prix" class="text" value=<?php if( !empty($id) ) {   echo @($pro->_prix); } ?> >
 
            </input>
-				<?php }?>
+
          </td>
        </tr>
       <tr>
@@ -98,11 +98,11 @@ if( !empty($id) ) {
         <tr>
           <th>Description :<span style="color:red;">*</span> </th>
           <td>
-						<?php if( !empty($id) ) { ?>
+
             <textarea required name="description" class="textarea" style="width: 810px; height: 200px" >
-             <?php echo @$pro->_description; ?>
+             <?php if( !empty($id) ) {  echo @$pro->_description; }?>
            </textarea>
-				 <?php } ?>
+
          </td>
        </tr>
 

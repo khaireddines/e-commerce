@@ -7,7 +7,7 @@ require_once("../classes/Util.php");
 @$id = $_POST['id'];
 @$prix=$_POST['prix'];
 @$id_categorie = $_POST['id_categorie'];
-if( !empty($libelle) && !empty($description) ) 
+if( !empty($libelle) && !empty($description) )
 {
 	$cat = new Produit();
 	$util = new Util();
@@ -15,7 +15,7 @@ if( !empty($libelle) && !empty($description) )
 	$cat->_description = $description;
 	$cat->_image = $util->upload('image', "../upload");
 	$cat->_prix=$prix;
-	$cat->_id_categorie=$id_categorie;
+	$cat->_id_categorie =$id_categorie;
 	if( empty($id) ) 	// Ajout
 		$id = $cat->ajouter();
 	else				// Modification
@@ -25,7 +25,7 @@ if( !empty($libelle) && !empty($description) )
 	}
 
 	header("Location: produit_list.php");
-} 
-else 
+}
+else
 	exit('Tous les champs sont obligatoires !!');
 ?>
